@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hexaguide"
+version = "1.0.0"
+description = "Web Penetration Testing Workflow Generator — by HexaCyberLab"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Md. Jony Hassain", email = "contact@hexacyberlab.com" }]
+requires-python = ">=3.10"
+dependencies = ["rich>=13.0.0"]
+keywords = ["pentesting", "security", "hacking", "cybersecurity", "web", "recon"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Security",
+    "Environment :: Console",
+    "Intended Audience :: Information Technology",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4",
+    "pytest-cov>=4.1",
+]
+
+[project.urls]
+Homepage = "https://github.com/jonyhossan110/HexaGuide"
+Issues   = "https://github.com/jonyhossan110/HexaGuide/issues"
+Agency   = "https://hexacyberlab.com"
+
+[project.scripts]
+HexaGuide = "hexaguide.main:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["hexaguide*"]
+
+[tool.setuptools.package-data]
+"hexaguide" = ["data/commands.json"]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"

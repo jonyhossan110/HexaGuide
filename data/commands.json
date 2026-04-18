@@ -1,0 +1,178 @@
+{
+  "recon": [
+    {
+      "tool": "nmap",
+      "cmd": "nmap -sV -sC -O -T4 {target}",
+      "desc": "Detect open ports, services, and OS fingerprint"
+    },
+    {
+      "tool": "whois",
+      "cmd": "whois {target}",
+      "desc": "Gather domain registration and ownership info"
+    },
+    {
+      "tool": "theHarvester",
+      "cmd": "theHarvester -d {target} -b google,bing,linkedin -l 200",
+      "desc": "Harvest emails, IPs, and subdomains from public sources"
+    },
+    {
+      "tool": "dig",
+      "cmd": "dig {target} ANY +noall +answer",
+      "desc": "DNS record enumeration (A, MX, NS, TXT)"
+    }
+  ],
+  "subdomain": [
+    {
+      "tool": "sublist3r",
+      "cmd": "sublist3r -d {target} -o reports/{target}_subdomains.txt",
+      "desc": "Fast subdomain enumeration using multiple search engines"
+    },
+    {
+      "tool": "amass",
+      "cmd": "amass enum -d {target} -o reports/{target}_amass.txt",
+      "desc": "In-depth subdomain discovery and asset mapping"
+    },
+    {
+      "tool": "ffuf",
+      "cmd": "ffuf -w /usr/share/wordlists/subdomains-top1million.txt -u https://FUZZ.{target} -mc 200,301,302",
+      "desc": "Fuzz subdomains using wordlist brute-force"
+    },
+    {
+      "tool": "assetfinder",
+      "cmd": "assetfinder --subs-only {target}",
+      "desc": "Quick passive subdomain collection"
+    }
+  ],
+  "scan": [
+    {
+      "tool": "nmap (full)",
+      "cmd": "nmap -p- -sV --open --min-rate=1000 {target} -oN reports/{target}_ports.txt",
+      "desc": "Full port scan with service version detection"
+    },
+    {
+      "tool": "masscan",
+      "cmd": "masscan -p0-65535 {target} --rate=10000 -oL reports/{target}_masscan.txt",
+      "desc": "Ultra-fast port scanning across all ports"
+    },
+    {
+      "tool": "nmap (vuln scripts)",
+      "cmd": "nmap --script=vuln -sV {target} -oN reports/{target}_vulnscan.txt",
+      "desc": "Run NSE vulnerability detection scripts"
+    },
+    {
+      "tool": "netcat",
+      "cmd": "nc -zvw3 {target} 80 443 8080 8443 22 21 25",
+      "desc": "Quick TCP port connectivity check"
+    }
+  ],
+  "directory": [
+    {
+      "tool": "gobuster",
+      "cmd": "gobuster dir -u https://{target} -w /usr/share/wordlists/dirb/common.txt -x php,html,js,txt -o reports/{target}_dirs.txt",
+      "desc": "Directory and file brute-force enumeration"
+    },
+    {
+      "tool": "ffuf",
+      "cmd": "ffuf -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u https://{target}/FUZZ -mc 200,204,301,302,403",
+      "desc": "Fast web content discovery with status code filtering"
+    },
+    {
+      "tool": "dirsearch",
+      "cmd": "dirsearch -u https://{target} -e php,asp,aspx,html,js -o reports/{target}_dirsearch.txt",
+      "desc": "Advanced directory brute-forcing with extension support"
+    },
+    {
+      "tool": "feroxbuster",
+      "cmd": "feroxbuster -u https://{target} -w /usr/share/wordlists/dirb/big.txt --depth 3 -o reports/{target}_ferox.txt",
+      "desc": "Recursive content discovery with depth control"
+    }
+  ],
+  "vuln": [
+    {
+      "tool": "nikto",
+      "cmd": "nikto -h https://{target} -output reports/{target}_nikto.txt",
+      "desc": "Web server misconfiguration and vulnerability scanner"
+    },
+    {
+      "tool": "nuclei",
+      "cmd": "nuclei -u https://{target} -severity medium,high,critical -o reports/{target}_nuclei.txt",
+      "desc": "Template-based vulnerability detection engine"
+    },
+    {
+      "tool": "wpscan",
+      "cmd": "wpscan --url https://{target} --enumerate p,t,u --output reports/{target}_wpscan.txt",
+      "desc": "WordPress CMS vulnerability and plugin scanner"
+    },
+    {
+      "tool": "sqlmap",
+      "cmd": "sqlmap -u https://{target}/?id=1 --dbs --batch --output-dir=reports/{target}_sqlmap",
+      "desc": "Automated SQL injection detection and exploitation"
+    }
+  ],
+  "exploit": [
+    {
+      "tool": "metasploit",
+      "cmd": "msfconsole -q -x 'search type:exploit name:{target}; use 0; set RHOSTS {target}; run'",
+      "desc": "Framework-based exploit module search and execution"
+    },
+    {
+      "tool": "searchsploit",
+      "cmd": "searchsploit {target} --www",
+      "desc": "Search Exploit-DB for known CVE exploits"
+    },
+    {
+      "tool": "xsser",
+      "cmd": "xsser --url https://{target}/search?q=XSS --auto",
+      "desc": "Automated Cross-Site Scripting (XSS) injection tester"
+    },
+    {
+      "tool": "commix",
+      "cmd": "commix --url=\"https://{target}/search?q=test\" --batch",
+      "desc": "OS command injection detection and exploitation"
+    }
+  ],
+  "auth": [
+    {
+      "tool": "hydra",
+      "cmd": "hydra -L /usr/share/wordlists/users.txt -P /usr/share/wordlists/rockyou.txt {target} http-post-form '/login:user=^USER^&pass=^PASS^:Invalid'",
+      "desc": "Brute-force login forms with custom credentials"
+    },
+    {
+      "tool": "medusa",
+      "cmd": "medusa -h {target} -U /usr/share/wordlists/users.txt -P /usr/share/wordlists/rockyou.txt -M http -n 80",
+      "desc": "Parallel brute-force authentication testing"
+    },
+    {
+      "tool": "burpsuite (passive)",
+      "cmd": "curl -s -i -X POST https://{target}/login -d 'user=admin&pass=admin' -A 'Mozilla/5.0' | grep -i 'set-cookie|location|error'",
+      "desc": "Manual authentication response analysis via curl"
+    },
+    {
+      "tool": "jwt_tool",
+      "cmd": "python3 jwt_tool.py -t https://{target}/api/protected -rh 'Authorization: Bearer TOKEN' -M at",
+      "desc": "JWT token vulnerability testing and manipulation"
+    }
+  ],
+  "ssl": [
+    {
+      "tool": "sslscan",
+      "cmd": "sslscan --no-colour {target}:443 | tee reports/{target}_ssl.txt",
+      "desc": "Detect weak ciphers, SSL/TLS protocol versions"
+    },
+    {
+      "tool": "testssl.sh",
+      "cmd": "testssl.sh --severity HIGH --quiet https://{target} | tee reports/{target}_testssl.txt",
+      "desc": "Comprehensive TLS/SSL security assessment"
+    },
+    {
+      "tool": "sslyze",
+      "cmd": "sslyze --regular {target}:443 --json_out=reports/{target}_sslyze.json",
+      "desc": "Fast SSL/TLS server configuration analysis"
+    },
+    {
+      "tool": "openssl",
+      "cmd": "openssl s_client -connect {target}:443 -showcerts </dev/null 2>/dev/null | openssl x509 -noout -text",
+      "desc": "Manual certificate inspection and chain validation"
+    }
+  ]
+}

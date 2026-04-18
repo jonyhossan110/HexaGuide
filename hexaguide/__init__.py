@@ -1,0 +1,5 @@
+"""HexaGuide — Web Penetration Testing Workflow Generator by HexaCyberLab."""
+__version__ = "1.0.0"
+__author__  = "Md. Jony Hassain"
+__email__   = "contact@hexacyberlab.com"
+__url__     = "https://github.com/HexaCyberLab/HexaGuide"

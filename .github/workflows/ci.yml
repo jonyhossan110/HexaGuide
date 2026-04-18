@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    name: "Python ${{ matrix.python-version }} on ${{ matrix.os }}"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
+
+      - name: Install HexaGuide with all dependencies
+        run: pip install -e ".[dev]"
+
+      - name: Verify CLI entry point
+        run: HexaGuide --version
+
+      - name: Run test suite
+        run: pytest tests/ -v --tb=short
+
+      - name: Smoke test — full workflow, no save
+        run: HexaGuide example.com --no-save
+
+      - name: Smoke test — single section
+        run: HexaGuide example.com --section recon --no-save
+
+      - name: Smoke test — report saving
+        shell: bash
+        run: |
+          HexaGuide smoketest.com
+          python -c "
+          import glob, sys
+          files = glob.glob('reports/smoketest.com_*.txt')
+          if not files:
+              print('ERROR: report file not found')
+              sys.exit(1)
+          print('Report OK:', files[0])
+          "
