@@ -23,19 +23,15 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install HexaGuide
-        run: pip install -e .
-
-      - name: Verify CLI entry point exists
-        run: HexaGuide --version
-
-      - name: Run full workflow smoke test
-        run: HexaGuide example.com --no-save
-
-      - name: Run single-section smoke test
-        run: HexaGuide example.com --section recon --no-save
-
-      - name: Verify report saving
+      - name: Install dependencies
         run: |
-          HexaGuide testdomain.com
-          python -c "import os, glob; files=glob.glob('reports/testdomain.com_*.txt'); assert files, 'Report not saved!'; print('Report OK:', files[0])"
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -r requirements-dev.txt
+          pip install -e .
+
+      - name: Run Pytest Suite
+        run: python -m pytest tests/ -v
+
+      - name: Verify CLI entry point
+        run: HexaGuide --version
