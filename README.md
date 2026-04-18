@@ -10,9 +10,9 @@
 
 **Web Penetration Testing Workflow Generator**
 
-[![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=flat-square&logo=python&logoColor=white)](https://python.org)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=flat-square&logo=python)](https://python.org)
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
-[![CI](https://img.shields.io/github/actions/workflow/status/jonyhossan110/HexaGuide/ci.yml?style=flat-square&label=CI&logo=github)](https://github.com/jonyhossan110/HexaGuide/actions)
+[![CI](https://img.shields.io/github/actions/workflow/status/HexaCyberLab/HexaGuide/ci.yml?style=flat-square&label=CI)](https://github.com/HexaCyberLab/HexaGuide/actions)
 [![Version](https://img.shields.io/badge/version-1.0.0-red?style=flat-square)](CHANGELOG.md)
 [![HexaCyberLab](https://img.shields.io/badge/by-HexaCyberLab-cyan?style=flat-square)](https://hexacyberlab.com)
 
@@ -26,13 +26,13 @@
 
 **HexaGuide** is a professional CLI tool that instantly generates a complete, structured web penetration testing workflow for any target domain or IP address.
 
-Run one command → get a full, phase-by-phase pentest roadmap with real tools and copy-ready commands — automatically saved as a timestamped report.
+Run one command → get a full, phase-by-phase pentest roadmap with real tools and copy-ready commands — saved as a timestamped report.
 
 Built by **[Md. Jony Hassain](https://linkedin.com/in/md-jony-hassain/)** — Web Penetration Tester at **[HexaCyberLab](https://hexacyberlab.com)**.
 
 ---
 
-## Quick Demo
+## Demo
 
 ```
 $ HexaGuide example.com
@@ -45,28 +45,29 @@ $ HexaGuide example.com
  |  _  |  __/>  < (_| | | |_| | |_| | | (_| |  __/
  |_| |_|\___/_/\_\__,_|  \____|\__,_|_|\__,_|\___|
 
-╭────────── ⬡ HexaGuide — Pentest Workflow ──────────╮
-│   Target   example.com                             │
-│   Version  v1.0.0                                  │
-│   Author   Md. Jony Hassain — HexaCyberLab         │
-│   Web      hexacyberlab.com                        │
-│   GitHub   github.com/jonyhossan110/HexaGuide      │
-╰────────────────────────────────────────────────────╯
+╭─────────────────────── ⬡ HexaGuide Pentest Report ───────────────────────╮
+│  Target   example.com                                                     │
+│  Version  v1.0.0                                                          │
+│  Author   Md. Jony Hassain — HexaCyberLab                                │
+│  Website  hexacyberlab.com                                                │
+╰───────────────────────────────────────────────────────────────────────────╯
 
 ⚠  WARNING: Use only on systems you have written permission to test.
 
-──── [1]  Reconnaissance ──────────────────────────────────
+──── [1]  Reconnaissance ──────────────────────────────────────────────────────
 
-    ╭─────────────────────────────────────────────────────╮
-    │ Tool    │ nmap                                      │
-    │ Command │ nmap -sV -sC -O -T4 example.com           │
-    │ Purpose │ Detect open ports, services, OS fingerprint│
-    ╰─────────────────────────────────────────────────────╯
-    ... (32 commands across 8 phases)
+    ╭─────────────────────────────────────────────────────────────────────╮
+    │ Tool    │ nmap                                                       │
+    │ Command │ nmap -sV -sC -O -T4 example.com                           │
+    │ Purpose │ Detect open ports, services, and OS fingerprint           │
+    ╰─────────────────────────────────────────────────────────────────────╯
 
-╭──────────────── ✔  Scan Complete ───────────────────╮
-│  Report  reports/example.com_20250101_120000.txt    │
-╰─────────────────────────────────────────────────────╯
+    ... (32 commands across 8 phases) ...
+
+╭──────────────────────────── ✔  Scan Complete ────────────────────────────╮
+│  Report   reports/example.com_20250117_143022.txt                        │
+│  Tip      All commands are copy-ready. Adjust wordlist paths as needed.  │
+╰──────────────────────────────────────────────────────────────────────────╯
 ```
 
 ---
@@ -74,54 +75,37 @@ $ HexaGuide example.com
 ## Features
 
 | Feature | Details |
-|---------|---------|
+|--------|---------|
 | **8 pentest phases** | Recon → Subdomain → Scan → Directory → Vuln → Exploit → Auth → SSL |
 | **32 real commands** | nmap, amass, nuclei, gobuster, nikto, sqlmap, hydra, sslscan & more |
-| **Copy-ready output** | `{target}` replaced with your domain — paste and run immediately |
-| **Auto-saved reports** | Timestamped `.txt` report saved to `reports/` after every scan |
-| **Single-phase mode** | `--section recon` runs just one phase |
-| **Rich terminal UI** | Colored panels, tables, legal warning banner |
-| **Global CLI** | Run as `HexaGuide` anywhere after `pip install .` |
-| **Zero bloat** | Only one runtime dependency: `rich` |
+| **Copy-ready output** | Every command has `{target}` replaced — just paste and run |
+| **Auto-saved reports** | Timestamped `.txt` report in `reports/` after every run |
+| **Section filter** | Run just one phase with `--section recon` |
+| **Rich terminal UI** | Colored panels, tables, warnings via the `rich` library |
+| **Global CLI** | Runs as `HexaGuide` anywhere after `pip install .` |
+| **Zero bloat** | One dependency (`rich`). Clean modular code. |
 
 ---
 
 ## Installation
 
 ### Requirements
-
-- Python **3.10** or newer
+- Python 3.10+
 - pip
 
-### Step 1 — Clone the repository
+### From GitHub (recommended)
 
 ```bash
 git clone https://github.com/jonyhossan110/HexaGuide.git
 cd HexaGuide
-```
-
-### Step 2 — Install (choose one)
-
-**Option A — Standard install (recommended)**
-```bash
 pip install .
 ```
 
-**Option B — Editable install (for development)**
-```bash
-pip install -e .
-```
-
-**Option C — Install with dev/test tools**
-```bash
-pip install -e ".[dev]"
-```
-
-### Step 3 — Verify
+### Verify
 
 ```bash
 HexaGuide --version
-# HexaGuide 1.0.0 — by HexaCyberLab
+# HexaGuide 1.0.0 by HexaCyberLab
 ```
 
 ---
@@ -133,14 +117,14 @@ HexaGuide --version
 HexaGuide example.com
 
 # Use an IP address
-HexaGuide 192.168.1.100
+HexaGuide 192.168.1.1
 
 # Run only one phase
 HexaGuide example.com --section recon
 HexaGuide example.com --section ssl
 HexaGuide example.com -s vuln
 
-# Skip saving the report to disk
+# Skip saving report to disk
 HexaGuide example.com --no-save
 
 # Show version
@@ -150,19 +134,10 @@ HexaGuide --version
 HexaGuide --help
 ```
 
-### All Options
-
-| Flag | Short | Description |
-|------|-------|-------------|
-| `--section SECTION` | `-s` | Run only one phase |
-| `--no-save` | | Skip writing report to disk |
-| `--version` | `-v` | Show version and exit |
-| `--help` | `-h` | Show help and exit |
-
 ### Available Sections
 
-| Value | Phase |
-|-------|-------|
+| Flag | Phase |
+|------|-------|
 | `recon` | Reconnaissance |
 | `subdomain` | Subdomain Enumeration |
 | `scan` | Scanning |
@@ -180,7 +155,7 @@ HexaGuide --help
 |-------|-------|
 | Reconnaissance | nmap, whois, theHarvester, dig |
 | Subdomain Enumeration | sublist3r, amass, ffuf, assetfinder |
-| Scanning | nmap (full), masscan, nmap (vuln scripts), netcat |
+| Scanning | nmap (full), masscan, nmap (vuln), netcat |
 | Directory Bruteforce | gobuster, ffuf, dirsearch, feroxbuster |
 | Vulnerability Scan | nikto, nuclei, wpscan, sqlmap |
 | Exploitation | metasploit, searchsploit, xsser, commix |
@@ -191,60 +166,14 @@ HexaGuide --help
 
 ## Reports
 
-Reports are automatically saved after every scan:
+Reports are auto-saved to `reports/<target>_<timestamp>.txt`:
 
 ```
 reports/
-└── example.com_20250101_143022.txt
+└── example.com_20250117_143022.txt
 ```
 
-Each report includes:
-- Target and timestamp
-- All 8 phases with tool names, commands, and descriptions
-- Legal notice
-
-The `reports/` directory is listed in `.gitignore` — your results stay local.
-
----
-
-## Development
-
-### Setup
-
-```bash
-git clone https://github.com/jonyhossan110/HexaGuide.git
-cd HexaGuide
-
-# Install with dev dependencies (includes pytest)
-pip install -e ".[dev]"
-```
-
-### Run Tests
-
-```bash
-# Run full test suite
-pytest
-
-# Run with verbose output
-pytest -v
-
-# Run only one test file
-pytest tests/test_engine.py -v
-```
-
-### Add a New Tool
-
-Open `hexaguide/data/commands.json` and add an entry to any section:
-
-```json
-{
-  "tool": "my-tool",
-  "cmd":  "my-tool --flag {target}",
-  "desc": "What this tool does in one line"
-}
-```
-
-Always use `{target}` — it gets replaced with the real domain at runtime.
+The `reports/` directory is listed in `.gitignore` — your scan results stay local.
 
 ---
 
@@ -252,41 +181,40 @@ Always use `{target}` — it gets replaced with the real domain at runtime.
 
 ```
 HexaGuide/
-├── hexaguide/                  # Main Python package
-│   ├── __init__.py             # Version and metadata
-│   ├── main.py                 # Entry point + report saver
-│   ├── cli.py                  # argparse (--section, --no-save, --version)
-│   ├── engine.py               # Loads commands.json, builds workflow
-│   ├── formatter.py            # Rich terminal UI
-│   ├── data/
-│   │   └── commands.json       # 32 pentest commands across 8 sections
-│   └── modules/                # Extensible per-phase stubs
+├── hexaguide/              # Main package
+│   ├── __init__.py         # Version metadata
+│   ├── main.py             # Entry point + report saver
+│   ├── cli.py              # argparse (target, --section, --no-save, --version)
+│   ├── engine.py           # Loads commands.json, builds workflow
+│   ├── formatter.py        # Rich terminal UI
+│   └── modules/            # Per-phase module stubs (extensible)
 │       ├── recon.py
 │       ├── subdomain.py
 │       ├── scan.py
 │       ├── exploit.py
 │       ├── auth.py
 │       └── ssl.py
-├── tests/                      # pytest test suite (3 files, 30+ tests)
+├── data/
+│   └── commands.json       # All 32 pentest commands (8 sections × 4 tools)
+├── tests/                  # Pytest test suite
 │   ├── test_engine.py
 │   ├── test_cli.py
 │   └── test_report.py
-├── reports/                    # Auto-created, gitignored
+├── reports/                # Auto-created, gitignored
 ├── .github/
 │   ├── workflows/
-│   │   ├── ci.yml              # CI: Ubuntu + Windows + macOS × Python 3.10–3.12
-│   │   └── release.yml         # Auto GitHub Release on git tag
+│   │   ├── ci.yml          # CI on push/PR (Ubuntu, Windows, macOS)
+│   │   └── release.yml     # Build + GitHub Release on tag
 │   ├── ISSUE_TEMPLATE/
 │   │   ├── bug_report.md
 │   │   └── feature_request.md
 │   └── PULL_REQUEST_TEMPLATE.md
-├── conftest.py                 # pytest root config
-├── pyproject.toml              # Build config, entry_points, dev extras
-├── setup.py                    # Legacy pip compatibility shim
-├── requirements.txt            # Runtime: rich
-├── requirements-dev.txt        # Dev: pytest, pytest-cov
-├── MANIFEST.in                 # Source distribution file includes
-├── LICENSE                     # MIT
+├── pyproject.toml          # Build config + entry_points
+├── setup.py                # Legacy compatibility shim
+├── requirements.txt        # Runtime dependency (rich)
+├── requirements-dev.txt    # Dev dependencies (pytest)
+├── MANIFEST.in
+├── LICENSE                 # MIT
 ├── CHANGELOG.md
 ├── CONTRIBUTING.md
 └── SECURITY.md
@@ -294,57 +222,58 @@ HexaGuide/
 
 ---
 
-## Troubleshooting
+## Development
 
-**`HexaGuide: command not found`**
 ```bash
-# Make sure pip scripts folder is in your PATH
-# On Linux/macOS:
-export PATH="$HOME/.local/bin:$PATH"
-# On Windows, run in the venv or use:
-python -m hexaguide.main example.com
+git clone https://github.com/jonyhassan110/HexaGuide.git
+cd HexaGuide
+python -m venv venv
+source venv/bin/activate     # Windows: venv\Scripts\activate
+pip install -e .
+pip install pytest
+
+# Run tests
+pytest tests/ -v
+
+# Run the tool
+HexaGuide example.com
 ```
 
-**`FileNotFoundError: commands.json`**
-```bash
-# Reinstall cleanly
-pip install --force-reinstall .
+### Adding a new tool
+
+Open `data/commands.json` and add an entry to the relevant section:
+
+```json
+{
+  "tool": "my-tool",
+  "cmd":  "my-tool --scan {target}",
+  "desc": "What this tool does"
+}
 ```
 
-**CI failing with `pytest: not found`**
-```bash
-# Install with dev extras
-pip install -e ".[dev]"
-```
+Use `{target}` as the placeholder — it gets replaced with the real domain at runtime.
 
 ---
 
 ## Legal Disclaimer
 
-> **HexaGuide is designed exclusively for authorized penetration testing.**
+> **HexaGuide is intended exclusively for authorized penetration testing.**
 >
-> Only use this tool against systems you **own** or have **explicit written permission** to test.
-> Unauthorized access is a criminal offense in most jurisdictions worldwide.
-> HexaCyberLab and the author bear **zero responsibility** for any misuse of this tool.
+> Only use this tool against systems you own or have **explicit written permission** to test.
+> Unauthorized access is a criminal offense in most jurisdictions.
+> HexaCyberLab and the author bear **zero responsibility** for any misuse.
 
 ---
 
 ## Author
 
-**Md. Jony Hassain**
-Web Penetration Tester | Ethical Hacker | Cybersecurity Specialist
+**Md. Jony Hassain**  
+Web Penetration Tester | Ethical Hacker | Cybersecurity Specialist  
 Founder — [HexaCyberLab](https://hexacyberlab.com)
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-md--jony--hassain-blue?style=flat-square&logo=linkedin)](https://linkedin.com/in/md-jony-hassain/)
-[![GitHub](https://img.shields.io/badge/GitHub-jonyhossan110-black?style=flat-square&logo=github)](https://github.com/jonyhossan110)
+[![GitHub](https://img.shields.io/badge/GitHub-HexaCyberLab-black?style=flat-square&logo=github)](https://github.com/HexaCyberLab)
 [![Upwork](https://img.shields.io/badge/Upwork-Hire%20Me-green?style=flat-square&logo=upwork)](https://upwork.com/freelancers/~01fb775c14cdfe8922)
-[![Instagram](https://img.shields.io/badge/Instagram-hexacyberlab-E4405F?style=flat-square&logo=instagram)](https://instagram.com/hexacyberlab/)
-
----
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for how to add tools, report bugs, and submit pull requests.
 
 ---
 

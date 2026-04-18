@@ -1,10 +1,2 @@
-include README.md
-include LICENSE
-include CHANGELOG.md
-include CONTRIBUTING.md
-include SECURITY.md
-include requirements.txt
-include requirements-dev.txt
-recursive-include hexaguide/data *.json
-recursive-include data *.json
-recursive-include tests *.py
+include data/commands.json
+recursive-include data *

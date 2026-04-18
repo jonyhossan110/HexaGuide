@@ -1,7 +1,10 @@
-"""cli.py — Argument parser for HexaGuide."""
 import argparse
 from hexaguide import __version__
-from hexaguide.engine import VALID_SECTIONS
+
+VALID_SECTIONS = [
+    "recon", "subdomain", "scan", "directory",
+    "vuln", "exploit", "auth", "ssl"
+]
 
 
 def get_args() -> argparse.Namespace:
@@ -9,7 +12,7 @@ def get_args() -> argparse.Namespace:
         prog="HexaGuide",
         description=(
             "HexaGuide — Web Penetration Testing Workflow Generator\n"
-            "Built by Md. Jony Hassain | HexaCyberLab | hexacyberlab.com"
+            "Built by HexaCyberLab | hexacyberlab.com"
         ),
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=(
@@ -18,25 +21,21 @@ def get_args() -> argparse.Namespace:
             "  HexaGuide 192.168.1.1\n"
             "  HexaGuide example.com --section recon\n"
             "  HexaGuide example.com --no-save\n"
-            "  HexaGuide --version\n"
             "\nAvailable sections:\n"
-            "  " + ", ".join(VALID_SECTIONS)
+            "  recon, subdomain, scan, directory, vuln, exploit, auth, ssl"
         ),
     )
 
     parser.add_argument(
         "target",
-        help="Target domain or IP address (e.g. example.com or 192.168.1.1)",
+        help="Target domain or IP (e.g. example.com or 192.168.1.1)",
     )
     parser.add_argument(
         "--section", "-s",
         choices=VALID_SECTIONS,
         default=None,
         metavar="SECTION",
-        help=(
-            "Run only one phase. Choices: "
-            + ", ".join(VALID_SECTIONS)
-        ),
+        help="Run only one section (recon/subdomain/scan/directory/vuln/exploit/auth/ssl)",
     )
     parser.add_argument(
         "--no-save",
@@ -47,7 +46,7 @@ def get_args() -> argparse.Namespace:
     parser.add_argument(
         "--version", "-v",
         action="version",
-        version=f"HexaGuide {__version__} — by HexaCyberLab",
+        version=f"HexaGuide {__version__} by HexaCyberLab",
     )
 
     return parser.parse_args()

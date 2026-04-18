@@ -7,15 +7,11 @@ Thank you for your interest in improving HexaGuide!
 ## Getting Started
 
 ```bash
-git clone https://github.com/jonyhossan110/HexaGuide.git
+git clone https://github.com/HexaCyberLab/HexaGuide.git
 cd HexaGuide
-
-# Install with dev dependencies
-pip install -e ".[dev]"
-
-# Verify everything works
-HexaGuide --version
-pytest
+python -m venv venv
+source venv/bin/activate        # Windows: venv\Scripts\activate
+pip install -e .
 ```
 
 ---
@@ -24,76 +20,55 @@ pytest
 
 ### 1. Add or improve commands
 
-All commands live in `hexaguide/data/commands.json`.
+All commands live in `data/commands.json`.
 
-Each entry must follow this structure exactly:
+Each entry follows this structure:
 
 ```json
 {
   "tool": "tool-name",
-  "cmd":  "tool-name --flags {target}",
-  "desc": "One-line description of what this does"
+  "cmd":  "tool-name --flag {target}",
+  "desc": "Short one-line description"
 }
 ```
 
-**Always use `{target}` as the placeholder** — it gets replaced with the user's domain/IP at runtime.
+Use `{target}` as the placeholder — it gets replaced with the user's domain/IP at runtime.
 
-**Available sections:** `recon`, `subdomain`, `scan`, `directory`, `vuln`, `exploit`, `auth`, `ssl`
-
-After adding, run:
-```bash
-pytest tests/test_engine.py -v
-HexaGuide example.com --no-save
-```
+**Sections available:** `recon`, `subdomain`, `scan`, `directory`, `vuln`, `exploit`, `auth`, `ssl`
 
 ---
 
 ### 2. Bug reports
 
-Open an issue: https://github.com/jonyhossan110/HexaGuide/issues
+Open an issue at:  
+https://github.com/HexaCyberLab/HexaGuide/issues
 
 Include:
-- Python version (`python --version`)
-- OS and version
-- Exact command you ran
-- Full terminal output / error
+- Python version
+- OS
+- Exact command run
+- Full error output
 
 ---
 
 ### 3. Feature requests
 
-Open an issue with `[Feature]` in the title.
+Open an issue with the `[Feature]` prefix in the title.
 
 ---
 
 ## Code Style
 
 - Follow PEP 8
-- Keep functions small and focused
-- No new external dependencies beyond `rich`
-- All commands must use `{target}` placeholder
-
----
-
-## Running Tests
-
-```bash
-# All tests
-pytest
-
-# Specific file
-pytest tests/test_engine.py -v
-
-# With coverage
-pytest --cov=hexaguide
-```
+- Keep functions small and single-purpose
+- No external dependencies beyond `rich`
 
 ---
 
 ## Legal Notice
 
-Only contribute commands/tools intended for **authorized** penetration testing.
-Never add tools designed for illegal access, DDoS attacks, or unauthorized surveillance.
+Only contribute commands/tools that are legal to use in authorized engagements.  
+Never add tools designed for illegal access, DDoS, or data theft.
 
 ---
 

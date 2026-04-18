@@ -1,6 +1,6 @@
 [build-system]
 requires = ["setuptools>=68", "wheel"]
-build-backend = "setuptools.build_meta"
+build-backend = "setuptools.backends.legacy:build"
 
 [project]
 name = "hexaguide"
@@ -21,33 +21,19 @@ classifiers = [
     "Intended Audience :: Information Technology",
 ]
 
-[project.optional-dependencies]
-dev = [
-    "pytest>=7.4",
-    "pytest-cov>=4.1",
-]
-
 [project.urls]
-Homepage = "https://github.com/jonyhossan110/HexaGuide"
-Issues   = "https://github.com/jonyhossan110/HexaGuide/issues"
-Agency   = "https://hexacyberlab.com"
+Homepage    = "https://github.com/HexaCyberLab/HexaGuide"
+Issues      = "https://github.com/HexaCyberLab/HexaGuide/issues"
+Agency      = "https://hexacyberlab.com"
 
 [project.scripts]
 HexaGuide = "hexaguide.main:main"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["hexaguide*"]
 
 [tool.setuptools.package-data]
-"hexaguide" = ["data/commands.json"]
+hexaguide = ["../data/commands.json", "data/commands.json"]
 
 [tool.setuptools]
 include-package-data = true
-
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-python_files = ["test_*.py"]
-python_classes = ["Test*"]
-python_functions = ["test_*"]
-addopts = "-v --tb=short"

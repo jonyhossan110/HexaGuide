@@ -1,2 +1,1 @@
-# Runtime dependency — also declared in pyproject.toml
 rich>=13.0.0

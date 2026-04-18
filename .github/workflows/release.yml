@@ -5,16 +5,14 @@ on:
     tags:
       - "v*.*.*"
 
-permissions:
-  contents: write
-
 jobs:
-  build-and-release:
-    name: Build & Publish Release
+  release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Set up Python
@@ -23,35 +21,18 @@ jobs:
           python-version: "3.11"
 
       - name: Install build tools
-        run: python -m pip install --upgrade pip build twine
+        run: pip install build twine
 
-      - name: Build distribution packages
+      - name: Build distribution
         run: python -m build
-
-      - name: Verify built packages
-        run: twine check dist/*
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: dist/*
           generate_release_notes: true
-          body: |
-            ## HexaGuide ${{ github.ref_name }}
 
-            Web Penetration Testing Workflow Generator by [HexaCyberLab](https://hexacyberlab.com)
-
-            ### Install
-            ```bash
-            pip install hexaguide
-            ```
-
-            ### Run
-            ```bash
-            HexaGuide example.com
-            ```
-
-      # Uncomment when ready to publish to PyPI:
+      # Uncomment to publish to PyPI:
       # - name: Publish to PyPI
       #   env:
       #     TWINE_USERNAME: __token__
